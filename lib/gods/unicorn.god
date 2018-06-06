@@ -1,12 +1,16 @@
 RAILS_ROOT = "/home/brimir/brimir"
 RAILS_ENV = ENV['RAILS_ENV'] || "development"
-MOUNT_PATH = ENV['RAILS_RELATIVE_URL_ROOT'] || "/"
+if ENV['RAILS_RELATIVE_URL_ROOT'] != nil && ENV['RAILS_RELATIVE_URL_ROOT'] != ""
+  MOUNT_PATH = " --path #{ENV['RAILS_RELATIVE_URL_ROOT']}"
+else
+  MOUNT_PATH = ""
+end
 
 God.watch do |w|
   w.name = "unicorn"
   w.interval = 15.seconds
 
-  w.start = "/bin/bash -c 'cd #{RAILS_ROOT}; unicorn_rails --env #{RAILS_ENV} --daemonize -c #{RAILS_ROOT}/config/unicorn.rb --path #{MOUNT_PATH}'"
+  w.start = "/bin/bash -c 'cd #{RAILS_ROOT}; unicorn_rails --env #{RAILS_ENV} --daemonize -c #{RAILS_ROOT}/config/unicorn.rb #{MOUNT_PATH}'"
   w.stop = "kill -QUIT `cat #{RAILS_ROOT}/tmp/pids/unicorn.pid`"
   w.restart = "kill -USR2 `cat #{RAILS_ROOT}/tmp/pids/unicorn.pid`"
   w.log = "#{RAILS_ROOT}/log/god_unicorn.log"
