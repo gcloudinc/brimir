@@ -36,6 +36,7 @@ Brimir::Application.routes.draw do
   root to: 'tickets#index'
 
   namespace :api do
+    get '/tickets/unread_count', :to => 'tickets#unread_count'
     namespace :v1 do
       resources :tickets, only: [ :index, :show, :create ]
       resources :sessions, only: [ :create ]
