@@ -23,7 +23,7 @@ class Attachment < ApplicationRecord
 
   has_attached_file :file,
       path: Tenant.files_path,
-      url: '/attachments/:id/:style',
+      url: ENV['RAILS_RELATIVE_URL_ROOT'] + '/attachments/:id/:style',
       styles: {
           thumb: {
               geometry: '50x50#',
