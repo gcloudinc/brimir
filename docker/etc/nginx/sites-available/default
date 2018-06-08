@@ -20,9 +20,9 @@ server {
     root   /home/brimir/brimir/public;
   }
 
-  location /admin {
+  location ~ ^__%RAILS_RELATIVE_URL_ROOT%__/ {
     if ($http_user_agent !~ __%ALLOW_ONLY_IOS_KEY%__) {
-      return 403;
+      return 404;
     }
     try_files $uri @unicorn;
   }
