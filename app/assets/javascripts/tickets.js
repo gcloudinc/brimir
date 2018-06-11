@@ -56,7 +56,7 @@ jQuery(function() {
       return { id:term, text:term };
     },
     ajax: {
-      url: '/labels.json',
+      url: $('h1 a').attr('href') + 'labels.json',
       dataType: 'json',
       data: function (term, page) {
         return {
