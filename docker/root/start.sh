@@ -16,7 +16,11 @@ RAILS_ENV=$ENVIRONMENT
 sudo -u brimir -i bash -c "cd $RAILS_ROOT && bundle install"
 sudo -u brimir -i bash -c "cd $RAILS_ROOT && rake db:migrate RAILS_ENV=$RAILS_ENV"
 if test $RAILS_ENV = "production"; then
-  sudo -u brimir -i bash -c "cd $RAILS_ROOT && rake assets:precompile RAILS_ENV=$RAILS_ENV"
+  if test -n "$RAILS_RELATIVE_URL_ROOT"; then
+    sudo -u brimir -i bash -c "cd $RAILS_ROOT && RAILS_ENV=$RAILS_ENV RAILS_RELATIVE_URL_ROOT=$RAILS_RELATIVE_URL_ROOT rake assets:precompile"
+  else
+    sudo -u brimir -i bash -c "cd $RAILS_ROOT && RAILS_ENV=$RAILS_ENV rake assets:precompile"
+  fi
 fi
 rm $RAILS_ROOT/tmp/pids/unicorn.pid
 sudo -u brimir -i bash -c "cd $RAILS_ROOT && RAILS_ENV=$RAILS_ENV RAILS_RELATIVE_URL_ROOT=$RAILS_RELATIVE_URL_ROOT god -c $RAILS_ROOT/lib/gods/unicorn.god"
