@@ -46,4 +46,5 @@ Brimir::Application.routes.draw do
     end
   end
 
+  resource :ping, only: [:show]
 end

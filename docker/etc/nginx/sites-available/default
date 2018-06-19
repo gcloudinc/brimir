@@ -16,6 +16,13 @@ server {
   charset utf-8;
   try_files $uri @unicorn;
 
+  location = __%RAILS_RELATIVE_URL_ROOT%__/ping {
+    if ($http_user_agent !~ ELB-HealthChecker) {
+      return 404;
+    }
+    try_files $uri @unicorn;
+  }
+
   location ~ ^__%RAILS_RELATIVE_URL_ROOT%__/assets/ {
     root   /home/brimir/brimir/public;
   }
