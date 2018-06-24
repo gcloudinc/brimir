@@ -136,6 +136,10 @@ class Ticket < ApplicationRecord
     unread_users.delete user
   end
 
+  def mark_unread(user)
+    unread_users << user unless is_unread?(user)
+  end
+
   def status_times
     total = {}
 
