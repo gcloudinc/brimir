@@ -78,6 +78,7 @@ class RepliesController < ApplicationController
         Reply.transaction do
           @reply.save!
           @reply.notification_mails.each(&:deliver_now)
+          @reply.mark_unread
         end
 
         redirect_to @reply.ticket, notice: I18n::translate(:reply_added)

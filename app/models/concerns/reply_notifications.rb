@@ -175,6 +175,12 @@ concern :ReplyNotifications do
     end - [nil]
   end
 
+  def mark_unread
+    notified_users.collect do |user|
+      self.ticket.mark_unread(user) unless user.ticket_system_address?
+    end
+  end
+
   private
 
   def users_not_to_notify
