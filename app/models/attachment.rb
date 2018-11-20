@@ -22,8 +22,7 @@ class Attachment < ApplicationRecord
   scope :non_inline, -> { where(content_id: nil) }
 
   has_attached_file :file,
-      path: Tenant.files_path,
-      url: ENV['RAILS_RELATIVE_URL_ROOT'] + '/attachments/:id/:style',
+     path: "brimir/:attachment/:id/:style.:extension",
       styles: {
           thumb: {
               geometry: '50x50#',

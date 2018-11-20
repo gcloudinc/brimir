@@ -108,3 +108,4 @@ end
 gem 'dotenv-rails'
 gem 'god'
 gem 'unicorn'
+gem 'aws-sdk', '~> 2'
