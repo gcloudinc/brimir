@@ -188,9 +188,9 @@ class NotificationMailer < ActionMailer::Base
     end
 
     def add_attachments(ticket_or_reply)
-      ticket_or_reply.attachments.each do |at|
-        attachments[at.file_file_name] = File.read(at.file.path)
-      end
+      #ticket_or_reply.attachments.each do |at|
+      #  attachments[at.file_file_name] = File.read(at.file.path)
+      #end
     end
 
 end
